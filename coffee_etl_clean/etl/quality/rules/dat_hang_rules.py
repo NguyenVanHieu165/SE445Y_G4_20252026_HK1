@@ -42,7 +42,7 @@ def validate_dat_hang_id(raw_id, existing_ids: Optional[Set] = None) -> List[str
     
     # Rule 1: Regex
     if not ID_PATTERN.match(s):
-        errors.append("id: Phải là số nguyên dương (regex: ^[1-9]\\d*$)")
+        errors.append("id: Phải là số nguyên dương ")
         return errors
     
     value = int(s)
@@ -73,7 +73,7 @@ def validate_khach_hang_id(value, valid_khach_hang_ids: Optional[Set] = None) ->
     
     # Rule 2: Regex
     if not ID_PATTERN.match(s):
-        errors.append("khach_hang_id: Phải là số nguyên dương (regex: ^[1-9]\\d*$)")
+        errors.append("khach_hang_id: Phải là số nguyên dương ")
         return errors
     
     try:
@@ -112,7 +112,7 @@ def validate_mon_id_fk(value, valid_mon_ids: Optional[Set] = None) -> List[str]:
     
     # Rule 2: Regex
     if not ID_PATTERN.match(s):
-        errors.append("mon_id: Phải là số nguyên dương (regex: ^[1-9]\\d*$)")
+        errors.append("mon_id: Phải là số nguyên dương ")
         return errors
     
     try:
@@ -152,7 +152,7 @@ def validate_so_luong_dat_hang(value) -> List[str]:
     
     # Rule 2: Regex - Số nguyên dương (không thập phân)
     if not ID_PATTERN.match(s):
-        errors.append("so_luong: Phải là số nguyên dương (regex: ^[1-9]\\d*$)")
+        errors.append("so_luong: Phải là số nguyên dương ")
         return errors
     
     try:

@@ -68,7 +68,7 @@ def validate_id(raw_id, existing_ids: Optional[Set] = None) -> List[str]:
 
     # Rule 2, 5, 6, 7, 8: Regex - Số nguyên dương
     if not ID_PATTERN.match(s):
-        errors.append("id: Phải là số nguyên dương (regex: ^[1-9]\\d*$)")
+        errors.append("id: Phải là số nguyên dương ")
         return errors
 
     value = int(s)
@@ -76,10 +76,6 @@ def validate_id(raw_id, existing_ids: Optional[Set] = None) -> List[str]:
     # Rule 3: Không âm
     if value <= 0:
         errors.append("id: Phải lớn hơn 0")
-    # Kiểm tra ID test
-    if value in TEST_IDS:
-        errors.append("id: Không dùng ID test (0, 123, 999)")
-
     # Kiểm tra giới hạn INT
     if value > 2_147_483_647:
         errors.append("id: Vượt giới hạn INT (2,147,483,647)")
@@ -122,15 +118,15 @@ def validate_ho_ten(value: Optional[str]) -> List[str]:
 
     # Rule 3: Không chứa số
     if HO_TEN_HAS_DIGIT.search(s):
-        errors.append("ho_ten: Chứa số (regex: \\d)")
+        errors.append("ho_ten: Chứa số ")
 
     # Rule 4: Không ký tự đặc biệt (trừ dấu cách)
     if HO_TEN_FORBIDDEN.search(s):
-        errors.append("ho_ten: Chứa ký tự đặc biệt không cho phép (regex: [^A-Za-zÀ-Ỵà-ỹ\\s])")
+        errors.append("ho_ten: Chứa ký tự đặc biệt không cho phép ")
 
     # Rule 6: Không khoảng trắng liên tiếp
     if MULTI_SPACE.search(s):
-        errors.append("ho_ten: Có khoảng trắng liên tiếp (regex: \\s{2,})")
+        errors.append("ho_ten: Có khoảng trắng liên tiếp")
 
     # Rule 8: Không lặp ký tự ≥3 lần
     if _has_repeated_chars(s, 3):
@@ -171,12 +167,12 @@ def validate_sdt(value: Optional[str]) -> List[str]:
 
     # Rule 2, 3, 4: Regex - 9-11 chữ số
     if not PHONE_PATTERN.match(s):
-        errors.append("sdt: Phải gồm 9-11 chữ số (regex: ^[0-9]{9,11}$)")
+        errors.append("sdt: Phải gồm 9-11 chữ số")
         return errors
 
     # Rule 5: Không chuỗi trùng lặp
     if PHONE_TEST_PATTERN.match(s):
-        errors.append("sdt: Không dùng số test toàn 0 hoặc toàn 1 (regex: ^(0+|1+)$)")
+        errors.append("sdt: Không dùng số test toàn 0 hoặc toàn 1")
 
     # Kiểm tra SĐT test trong whitelist
     if s in TEST_PHONES:
@@ -219,7 +215,7 @@ def validate_thanh_pho(value: Optional[str]) -> List[str]:
 
     # Rule 2, 4: Regex - Chỉ chữ + dấu + space
     if not CITY_PATTERN.match(s):
-        errors.append("thanh_pho: Chỉ chữ + dấu TV + khoảng trắng, 2-50 ký tự (regex: ^[A-Za-zÀ-Ỵà-ỹ\\s]{2,50}$)")
+        errors.append("thanh_pho: Chỉ chữ + dấu TV + khoảng trắng, 2-50 ký tự ")
 
     # Rule 3: Không chứa số
     if CITY_HAS_DIGIT.search(s):
@@ -240,43 +236,24 @@ def validate_thanh_pho(value: Optional[str]) -> List[str]:
 # EMAIL VALIDATION - 6 rules
 # ===========================================================
 def validate_email(value: Optional[str], existing_emails: Optional[Set] = None) -> List[str]:
-    """
-    Validate email.
-    
-    Rules:
-    1. Không rỗng
-    2. Đúng định dạng email chuẩn (regex)
-    3. Không trùng email đã có
-    4. Lowercase toàn bộ (Transform)
-    5. Không chứa dấu tiếng Việt
-    6. Không khoảng trắng
-    """
     errors = []
 
-    # Rule 1: Không rỗng
     if _is_blank(value):
         errors.append("email: Không rỗng")
         return errors
 
     s = value.strip()
 
-    # Rule 6: Không khoảng trắng
     if " " in s:
         errors.append("email: Không chứa khoảng trắng")
 
-    # Rule 2: Regex - Format email
     if not EMAIL_PATTERN.match(s):
-        errors.append("email: Sai định dạng (regex: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$)")
+        errors.append("email: Sai định dạng ")
 
-    # Rule 5: Không dấu tiếng Việt
     if EMAIL_VIET_CHAR.search(s):
-        errors.append("email: Chứa dấu tiếng Việt (regex: [À-Ỵà-ỹ])")
+        errors.append("email: Chứa dấu tiếng Việt ")
 
-    # Kiểm tra email test - chỉ warning, không fail
-    # if EMAIL_TEST_PREFIX.match(s):
-    #     errors.append("email: Email test (regex: ^(test|demo|sample|example|fake|dummy))")
-
-    # Rule 3: Không trùng lặp
+    # HARD ERROR – Loại record nếu trùng
     if existing_emails and s.lower() in existing_emails:
         errors.append("email: Trùng email đã tồn tại")
 

@@ -39,7 +39,7 @@ def validate_nguyen_lieu_id(raw_id, existing_ids: Optional[Set] = None) -> List[
         return errors
     
     if not ID_PATTERN.match(s):
-        errors.append("id: Phải là số nguyên dương (regex: ^[1-9]\\d*$)")
+        errors.append("id: Phải là số nguyên dương ")
         return errors
     
     value = int(s)
@@ -72,7 +72,7 @@ def validate_ten_nguyen_lieu(value: Optional[str], existing_nguyen_lieu: Optiona
     
     # Rule 2, 3: Regex
     if not TEN_NGUYEN_LIEU_PATTERN.match(s):
-        errors.append("ten_nguyen_lieu: Độ dài 2-200 ký tự (regex: ^[A-Za-zÀ-Ỵà-ỹ0-9\\s\\-,\\.()]{2,200}$)")
+        errors.append("ten_nguyen_lieu: Độ dài 2-200 ký tự ")
     
     # Kiểm tra độ dài cụ thể
     if len(s) > 100:

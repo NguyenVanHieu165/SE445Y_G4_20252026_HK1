@@ -36,7 +36,7 @@ def validate_loai_mon_id(raw_id, existing_ids: Optional[Set] = None) -> List[str
     
     # Rule 1, 4: Regex
     if not ID_PATTERN.match(s):
-        errors.append("id: Phải là số nguyên dương (regex: ^[1-9]\\d*$)")
+        errors.append("id: Phải là số nguyên dương ")
         return errors
     
     value = int(s)
@@ -73,7 +73,7 @@ def validate_ten_loai(value: Optional[str], existing_loai: Optional[Set] = None)
     
     # Rule 2, 3: Regex
     if not TEN_MON_PATTERN.match(s):
-        errors.append("ten_loai: Độ dài 2-100 ký tự, cho phép chữ, số, dấu (regex: ^[A-Za-zÀ-Ỵà-ỹ0-9\\s\\-,\\.()]{2,200}$)")
+        errors.append("ten_loai: Độ dài 2-100 ký tự, cho phép chữ, số, dấu ")
     
     # Kiểm tra độ dài cụ thể
     if len(s) > 100:

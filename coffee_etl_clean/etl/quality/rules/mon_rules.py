@@ -33,7 +33,7 @@ def validate_mon_id(raw_id, existing_ids: Optional[Set] = None) -> List[str]:
     
     # Rule 1: Regex
     if not ID_PATTERN.match(s):
-        errors.append("id: Phải là số nguyên dương (regex: ^[1-9]\\d*$)")
+        errors.append("id: Phải là số nguyên dương ")
         return errors
     
     value = int(s)
@@ -66,7 +66,7 @@ def validate_ten_mon(value: Optional[str], existing_mon: Optional[Set] = None) -
     
     # Rule 2, 3: Regex
     if not TEN_MON_PATTERN.match(s):
-        errors.append("ten_mon: Độ dài 2-200 ký tự, cho phép chữ, số, dấu (regex: ^[A-Za-zÀ-Ỵà-ỹ0-9\\s\\-,\\.()]{2,200}$)")
+        errors.append("ten_mon: Độ dài 2-200 ký tự, cho phép chữ, số, dấu ")
     
     # Rule 4: Không test data
     if TEST_KEYWORDS.search(s):
@@ -103,7 +103,7 @@ def validate_loai_id(value, valid_loai_ids: Optional[Set] = None) -> List[str]:
     
     # Rule 2: Regex
     if not ID_PATTERN.match(s):
-        errors.append("loai_id: Phải là số nguyên dương (regex: ^[1-9]\\d*$)")
+        errors.append("loai_id: Phải là số nguyên dương ")
         return errors
     
     try:
@@ -149,7 +149,7 @@ def validate_gia(value) -> List[str]:
     
     # Rule 2: Regex - Số dương
     if not POSITIVE_NUMBER.match(s):
-        errors.append("gia: Phải là số dương (regex: ^\\d+(\\.\\d+)?$)")
+        errors.append("gia: Phải là số dương")
         return errors
     
     try:

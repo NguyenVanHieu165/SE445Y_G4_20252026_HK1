@@ -35,7 +35,7 @@ def validate_mon_csv_id(raw_id, existing_ids: Optional[Set] = None) -> List[str]
     
     # Rule 2: Nếu có thì phải là số nguyên dương
     if not ID_PATTERN.match(s):
-        errors.append("id: Phải là số nguyên dương (regex: ^[1-9]\\d*$)")
+        errors.append("id: Phải là số nguyên dương ")
         return errors
     
     value = int(s)
@@ -74,7 +74,7 @@ def validate_ten_san_pham(value: Optional[str], existing_mon: Optional[Set] = No
     
     # Kiểm tra pattern linh hoạt hơn
     if not TEN_MON_PATTERNCSV.match(s):
-        errors.append("ten_san_pham: Chỉ cho phép chữ, số, dấu (regex: ^[A-Za-zÀ-Ỵà-ỹ\\s\\-,\\.()]{2,200}$)")
+        errors.append("ten_san_pham: Chỉ cho phép chữ, số, dấu ")
     
     # Rule 4: Không test data
     if TEST_KEYWORDS.search(s):
@@ -144,7 +144,7 @@ def validate_gia_csv(value) -> List[str]:
     
     # Kiểm tra nếu là "abc" hoặc text khác
     if not POSITIVE_NUMBER.match(s):
-        errors.append("gia: Phải là số dương (regex: ^\\d+(\\.\\d+)?$)")
+        errors.append("gia: Phải là số dương ")
         return errors
     
     try:
